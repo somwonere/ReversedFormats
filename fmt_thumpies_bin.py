@@ -12,7 +12,7 @@ def registerNoesisTypes():
     noesis.setHandlerLoadModel(handle, ThumpBINLoadModel)
 
     #noesis.logPopup()
-    print("The log can be useful for catching debug prints from preview loads.\nBut don't leave it on when you release your script, or it will probably annoy people.")
+    #print("The log can be useful for catching debug prints from preview loads.\nBut don't leave it on when you release your script, or it will probably annoy people.")
     return 1
 
 def ThumpBINCheckType(data):
