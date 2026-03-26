@@ -1,7 +1,8 @@
 # Cellfish's .model (Header: BMDL)
 # Note: If there is no bones, then that means there's animation data in the model
 # Written by Somwonere
-# Recommended to export as .dae/.smd, Blender screws up importing .fbx because the rigging data has no parenting. (decompiled the apk, it reads floats in that section)
+# Recommended to export as both .dae & .fbx, Blender screws up importing .fbx because of multiple armatures and importing .dae with bad weights, you can fix this by importing the .fbx with good weights and applying the mesh with the .dae rig.
+# Also the rigging data has no parents. (decompiled the apk, it reads floats in that section)
 
 from inc_noesis import *
 
