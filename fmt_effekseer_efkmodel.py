@@ -9,8 +9,8 @@ def registerNoesisTypes():
 	noesis.setHandlerTypeCheck(handle, efkCheckType)
 	noesis.setHandlerLoadModel(handle, efkLoadModel)
 
-	noesis.logPopup()
-	print("The log can be useful for catching debug prints from preview loads.\nBut don't leave it on when you release your script, or it will probably annoy people.")
+	#noesis.logPopup()
+	#print("The log can be useful for catching debug prints from preview loads.\nBut don't leave it on when you release your script, or it will probably annoy people.")
 	return 1
 
 def efkCheckType(data):
