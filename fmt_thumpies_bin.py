@@ -1,6 +1,6 @@
 # Thumpies .bin (Model)
-# This is my first noesis plugin, i don't know how to use stuff like "rpgBind..."
-# you can notice some models have weird culling, the models in-game doesn't use any culling at all
+# Written by Somwonere
+# you can notice some models have inverted culling, the models in-game doesn't use any culling at all
 # acknowledgment: https://github.com/iestyn129/Thumpie2Obj/blob/master/thumpie2obj.py
 
 
@@ -25,37 +25,27 @@ def ThumpBINCheckType(data):
 def ThumpBINLoadModel(data, mdlList):
     bs = NoeBitStream(data)
     ctx = rapi.rpgCreateContext()
-    
-    VCount=0
-    FCount=0
+    rapi.rpgSetPosScaleBias(NoeVec3((-1,1,1)),NoeVec3())
     
     bs.seek(0x4, NOESEEK_ABS)
     textureNameSize = bs.readUInt()
     print(textureNameSize)
-    bs.seek(textureNameSize-1, NOESEEK_REL)
+    textureName = noeAsciiFromBytes(bs.readBytes(textureNameSize-1))
     bs.seek(4-((textureNameSize-1)%4), NOESEEK_REL)
     
     bs.seek(0x4, NOESEEK_REL)
-    VCount=bs.readUInt()
-    VertArray=[NoeVec3()]*VCount
-    UVArray=[NoeVec3()]*VCount
-    print(VCount)
-    for i in range(0, VCount):
-        VertArray[i] = NoeVec3((bs.readFloat()*-1,bs.readFloat(),bs.readFloat()))
-        UVArray[i] = NoeVec3((bs.readFloat(),bs.readFloat(),0))
-        bs.seek(4, NOESEEK_REL)
+    pos_count = bs.readUInt()
+    print("Positions: " + str(pos_count))
+    pos_data = bs.readBytes(pos_count*0x18)
+    rapi.rpgBindPositionBuffer(pos_data, noesis.RPGEODATA_FLOAT, 0x18)
+    rapi.rpgBindUV1BufferOfs(pos_data, noesis.RPGEODATA_FLOAT, 0x18, 0xC)
     
-    FCount = bs.readUInt()
-    print(FCount)
-    FaceArray = [0] * (FCount * 3)
-    for i in range(0, FCount * 3):
-        FaceArray[i] = bs.readUInt()
-
-    mesh=NoeMesh([], [])
-    mesh.setIndices(FaceArray)
-    mesh.setPositions(VertArray)
-    mesh.setUVs(UVArray)
+    idx_count = bs.readUInt()
+    print("Indexes: " + str(idx_count))
+    idx_data = bs.readBytes(idx_count*0xC)
+    rapi.rpgCommitTriangles(idx_data, noesis.RPGEODATA_UINT, idx_count*3, noesis.RPGEO_TRIANGLE)
     
-    mdlList.append(NoeModel([mesh], [], []))
-    
+    mdl = rapi.rpgConstructModel()
+    mdlList.append(mdl)
+    print("Texture Path: " + textureName)
     return 1
