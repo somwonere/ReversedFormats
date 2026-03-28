@@ -14,7 +14,7 @@ def registerNoesisTypes():
     noesis.setHandlerTypeCheck(handle, lullCheckType)
     noesis.setHandlerLoadModel(handle, lullLoadModel)
     
-    noesis.logPopup()
+    #noesis.logPopup()
     #print("The log can be useful for catching debug prints from preview loads.\nBut don't leave it on when you release your script, or it will probably annoy people.")
     return 1
 
