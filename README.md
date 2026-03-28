@@ -4,5 +4,5 @@ Some stuff for the formats i've reverse enginered, you can use some of the .hexp
 ## List:
 * Cellfish Studios *.model (Header: BMDL)* [Noesis]
 * Effekseer *.efkmodel [Noesis]
-* Google's Playground *.lullmodel (sometimes .fplmesh)
+* Google's Playground *.lullmodel (sometimes .fplmesh) [Noesis]
 * Thumpies *.bin (Model)* [Noesis]
