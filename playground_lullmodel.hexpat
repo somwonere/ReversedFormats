@@ -22,7 +22,7 @@ struct Verts{
     float VertX;
     float VertY;
     float VertZ;
-    if (var_VertSize == 60) // some avengers
+    if (var_VertSize == 60 || var_VertSize == 76) // some avengers
         $ += 4;
     if (var_VertSize > 32){ // "> 32" fixes for avengers-captainmarvelglow_fire_03
         float VertU;
@@ -37,7 +37,7 @@ struct Verts{
         float TangZ;
         float Unknown; // we are number 1, probably can be skipped
     }
-    if (var_VertSize == 72) // __default_mesh.lullmodel and japanese_phrases fix
+    if (var_VertSize == 72 || var_VertSize == 76) // __default_mesh.lullmodel and japanese_phrases fix
         $ += 0x10;
     u8 Idx1; // i now take back what i said about cellfish's model format (8 bytes per skinning)
     u8 Idx2;
