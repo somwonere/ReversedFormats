@@ -1,0 +1,46 @@
+# Microsoft Bicycle Games Archive
+# Only works on "4SER" archives for the time being, such as the Game.rgs sounds
+# Written by Somwonere
+
+idstring "4SER"
+
+get TypesOfs long
+get HeaderOfs long
+get AllHeaderSize long
+goto TypesOfs
+
+get FileCount long
+xmath FileCountEndHelp "FileCount - 1"
+
+for i = 0 < FileCount
+	getdstring FileType 4
+	
+	get offset long
+	savepos position
+	get null long
+	if i == FileCountEndHelp
+		math offset2 = TypesOfs
+	else
+		get offset2 long
+	endif
+	xmath size "offset2 - offset"
+    
+	string filename = ""
+	string FileType r FileType
+	string filename + i
+	string filename + "."
+	string filename + FileType
+	
+	if FileType == "SND2" # Sound check
+		goto offset
+		get null signed_long # identifier
+		GetDString filename 0x40
+		math offset + 0x58
+		math size - 0x58
+	endif
+	if size != 0
+		log filename offset size
+	endif
+	
+	goto position
+next i
