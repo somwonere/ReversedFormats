@@ -1,8 +1,8 @@
 # Microsoft Bicycle Games Archive
-# Only works on "4SER" archives for the time being, such as the Game.rgs sounds
 # Written by Somwonere
 
-idstring "4SER"
+get FileVersion byte
+idstring "SER"
 
 get TypesOfs long
 get HeaderOfs long
@@ -14,13 +14,17 @@ xmath FileCountEndHelp "FileCount - 1"
 
 for i = 0 < FileCount
 	getdstring FileType 4
-	
 	get offset long
+	if FileVersion == 50
+		get null long
+	endif
 	savepos position
-	get null long
+	
+
 	if i == FileCountEndHelp
 		math offset2 = TypesOfs
 	else
+		get null long
 		get offset2 long
 	endif
 	xmath size "offset2 - offset"
