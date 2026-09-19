@@ -1,0 +1,50 @@
+# Sonic Boom: Shattered Crystal / Fire & Ice. .asan & .san .cooked
+# Written by Somwonere
+# Surprisingly the model data is stored and can be read like the archives.
+# Special thanks to killercracker / SleepyZay on the old VG Resource fourms for some documentation.
+
+getdstring fileHeader 4
+get fileSize long
+math fileSize + 4
+
+set i 0 #Prevents having "i" in filenames
+for i
+	savepos curOffset
+	if curOffset = fileSize
+		break
+	endif
+	
+	savepos chunkOffset
+	
+	getdstring chunkType 0x4
+	string fileName = ""
+	string fileName + i
+	string fileName + "."
+	string fileName + chunkType
+	
+	get chunkSize long
+	math chunkSize + 4
+	
+	if chunkType != "ASDB"
+		if chunkType == "TEXR"
+			set fileName "TEXR/"
+			getdstring tempHeader 4
+			get tempSize long
+			math tempSize - 16
+			goto 12 0 SEEK_CUR
+			getdstring tempName tempSize
+			string tempName - .tga
+			string tempName + .ctpk
+			string fileName + tempName
+			
+			getdstring tempHeader 4
+			get chunkSize long
+			math chunkSize - 4
+			savepos chunkOffset
+		endif
+		
+		log fileName chunkOffset chunkSize
+		xmath chunkSkip "chunkOffset + chunkSize"
+		goto chunkSkip
+	endif
+next i
